@@ -1,0 +1,3 @@
+# DVD Dispatch
+
+Do you not have time to get out to the movies anymore? Do you ever see the trailer or advertisement for a movie and think it's something you would like to watch, but it will have to wait until it's available for rent. Unfortunately it's easy to forget every movie we want to watch unless we write it down, and even then we have to keep checking for its availability for rent. DVD Dispatch solves that problem by allowing you to enter a movie into your 'watch list', and once it becomes available for rent, you'll be alerted!
