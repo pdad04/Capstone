@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView } from 'react-native'
-import { Container, Content, Footer, FooterTab, Button, Icon, Text } from 'native-base'
+import { Container, Content, Footer, FooterTab, Button, Icon, Text, Alert } from 'native-base'
 import { connect } from 'react-redux'
 import SearchMovie from '../Components/SearchMovie'
 import WatchList from '../Components/WatchList'
