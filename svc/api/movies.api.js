@@ -8,7 +8,7 @@ app.get(`${baseUrl}/:name`, (req, res) => {
 });
 
 function getTestData(name){
-    return [new Movie("Allen's Awesome Movie", new Date(), new Date()), new Movie("Andre's also awesome but slightly less awesome movie", new Date(), new Date()), , new Movie(name, new Date(), new Date())];
+    return [new Movie("Allen's Awesome Movie", new Date(), new Date()), new Movie("Andre's also awesome but slightly less awesome movie", new Date(), new Date()), new Movie(name, new Date(), new Date())];
 }
 
 module.exports = app;

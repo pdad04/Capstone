@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // import PropTypes from 'prop-types';
-import { View } from 'react-native'
-import { Container, Content, Header, Text, Item, Icon, Input, Button } from 'native-base'
+import { View, AsyncStorage, FlatList, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { Container, Content, Header, Text, Item, Icon, Input, Button, List, ListItem, Left, Right } from 'native-base'
 import styles from './Styles/SearchMovieStyle'
 
 export default class SearchMovie extends Component {
@@ -18,19 +18,22 @@ export default class SearchMovie extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { searchText: '' }
+    this.state = { searchText: '', movies: [], searchedPerformed: false }
+  }
+
+  componentDidMount(){
+    AsyncStorage.getItem('inputKey').then((value) => {
+      if(value !== null){
+        this.setState({ searchText: value });
+      }
+    }).done();
   }
 
   performSearch() {
-    let movies = [];
     return fetch(`http://localhost:3000/api/movies/${this.state.searchText}`)
       .then((response) => response.json())
       .then((responseJson) => {
-
-        for(var i in responseJson){
-          movies.push(responseJson[i]);
-        }
-        
+        this.setState({movies: responseJson, searchedPerformed: true})
       })
       .catch((error) => {
         console.error(error)
@@ -39,23 +42,74 @@ export default class SearchMovie extends Component {
   }
 
   render () {
-    return (
-      <Container>
-        <Header searchBar rounded>
-          <Item>
-            <Icon name='ios-search' />
-            <Input 
-              placeholder='Search Movie' 
-              onChangeText = { (text) => this.setState({ searchText: text }) }
-            />
-          </Item>
-          <Button transparent disabled={!this.state.searchText}
-            onPress={() => this.performSearch()}
-          >
-            <Text>Search</Text>
-          </Button>
-        </Header>
-      </Container>
-    )
+    if(this.state.searchedPerformed){
+      return (
+        <Container>
+          <Header searchBar rounded>
+            <Item>
+              <Icon name='ios-search' />
+              <Input 
+                clearButtonMode={'while-editing'}
+                placeholder='Search Movie' 
+                returnKeyType={'search'}
+                onSubmitEditing={() => {
+                  if(this.state.searchText){
+                    this.performSearch()
+                  }
+                }}
+                onChangeText = { (text) => {
+                  this.setState({ searchText: text });
+                  AsyncStorage.setItem('inputKey', text);
+                }}
+                value={this.state.searchText}
+              />
+            </Item>
+          </Header>
+          <Content>
+          <FlatList
+            data={this.state.movies}
+            keyExtractor={(item, index) => index.toString() }
+            renderItem={({item}) =>(
+                <ListItem noIndent
+                  onPress={() => console.log(`Pressed ${item.name}`)}
+                >
+                  <Left>
+                    <Text>{item.name}</Text>
+                  </Left>
+                  <Right>
+                    <Icon name='arrow-forward' />
+                  </Right>
+                </ListItem>
+            )}
+          />
+          </Content>
+        </Container>
+      )
+    }else{
+      return (
+        <Container>
+          <Header searchBar rounded>
+            <Item>
+              <Icon name='ios-search' />
+              <Input 
+                clearButtonMode={'while-editing'}
+                placeholder='Search Movie' 
+                returnKeyType={'search'}
+                onSubmitEditing={() => {
+                  if(this.state.searchText){
+                    this.performSearch()
+                  }
+                }}
+                onChangeText = { (text) => {
+                  this.setState({ searchText: text });
+                  AsyncStorage.setItem('inputKey', text);
+                }}
+                value={this.state.searchText}
+              />
+            </Item>
+          </Header>
+        </Container>
+      )
+    }
   }
 }
