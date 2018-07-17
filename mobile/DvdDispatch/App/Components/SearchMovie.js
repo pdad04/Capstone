@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import PropTypes from 'prop-types';
-import { View, AsyncStorage, FlatList, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { View, AsyncStorage, FlatList, TouchableOpacity, TouchableHighlight, Alert } from 'react-native'
 import { Container, Content, Header, Text, Item, Icon, Input, Button, List, ListItem, Left, Right } from 'native-base'
 import styles from './Styles/SearchMovieStyle'
 
@@ -22,6 +22,7 @@ export default class SearchMovie extends Component {
   }
 
   componentDidMount(){
+    console.log(this.props.watchList)
     AsyncStorage.getItem('inputKey').then((value) => {
       if(value !== null){
         this.setState({ searchText: value });
@@ -71,7 +72,8 @@ export default class SearchMovie extends Component {
             keyExtractor={(item, index) => index.toString() }
             renderItem={({item}) =>(
                 <ListItem noIndent
-                  onPress={() => console.log(`Pressed ${item.name}`)}
+                  onPress={() => 
+                    Alert.alert(`Add "${item.name}" to Watch List?`, ``, [{text: 'Add', onPress:() => this.props.watchList(item), style:'default'}, {text: 'Cancel', style:'cancel'}])}
                 >
                   <Left>
                     <Text>{item.name}</Text>

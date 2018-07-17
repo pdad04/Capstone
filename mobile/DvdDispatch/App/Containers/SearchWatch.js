@@ -13,14 +13,27 @@ import styles from './Styles/SearchWatchStyle'
 class SearchWatch extends Component {
   constructor (props) {
     super(props)
-    this.state = { search: true }
+    this.state = { 
+      search: true,
+      watchList: []
+    }
+  }
+
+  addToWatchList(entry){
+    this.setState(prevState => ({ watchList: [...prevState.watchList, entry]}))
+  }
+
+  removeFromWatchList(index){
+    this.setState({watchList: this.state.watchList.filter( (x,i) => i != index)})
   }
 
   render() {
     if (this.state.search) {
       return (
         <Container>
-          <SearchMovie />
+          <SearchMovie
+            watchList={ (entry) => this.addToWatchList(entry)}
+           />
           <Content>
           </Content>
           <Footer>
@@ -40,7 +53,10 @@ class SearchWatch extends Component {
     } else {
       return (
         <Container>
-          <WatchList />
+          <WatchList
+            list={this.state.watchList}
+            removeItem={ (index) => this.removeFromWatchList(index) }
+          />
           <Footer>
             <FooterTab>
               <Button onPress={ () => this.setState({ search: true })}>
