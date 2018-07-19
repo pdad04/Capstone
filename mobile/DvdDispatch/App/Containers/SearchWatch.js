@@ -34,8 +34,7 @@ class SearchWatch extends Component {
           <SearchMovie
             watchList={ (entry) => this.addToWatchList(entry)}
            />
-          <Content>
-          </Content>
+          
           <Footer>
             <FooterTab>
               <Button>

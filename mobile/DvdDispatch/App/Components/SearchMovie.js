@@ -73,7 +73,7 @@ export default class SearchMovie extends Component {
             renderItem={({item}) =>(
                 <ListItem noIndent
                   onPress={() => 
-                    Alert.alert(`Add "${item.name}" to Watch List?`, ``, [{text: 'Add', onPress:() => this.props.watchList(item), style:'default'}, {text: 'Cancel', style:'cancel'}])}
+                    Alert.alert(`Add "${item.name}" to Watch List?`, `${item.description}`, [{text: 'Add', onPress:() => this.props.watchList(item), style:'default'}, {text: 'Cancel', style:'cancel'}])}
                 >
                   <Left>
                     <Text>{item.name}</Text>
