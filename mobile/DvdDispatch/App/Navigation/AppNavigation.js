@@ -1,20 +1,26 @@
-import { StackNavigator } from 'react-navigation'
+import { StackNavigator, TabNavigator } from 'react-navigation'
+import MovieDetails from '../Containers/MovieDetails'
+import MovieWatchList from '../Containers/MovieWatchList'
+import MovieSearch from '../Containers/MovieSearch'
 import SearchWatch from '../Containers/SearchWatch'
 import LaunchScreen from '../Containers/LaunchScreen'
 
 import styles from './Styles/NavigationStyles'
 
 // Manifest of possible screens
-const PrimaryNav = StackNavigator({
-  SearchWatch: { screen: SearchWatch },
-  LaunchScreen: { screen: LaunchScreen }
+const SearchStack = StackNavigator({
+  Search: { screen: MovieSearch },
+  Details: { screen: MovieDetails }
 }, {
-  // Default config for all screens
-  headerMode: 'none',
-  initialRouteName: 'SearchWatch',
-  navigationOptions: {
-    headerStyle: styles.header
-  }
+  headerMode: 'screen'
+})
+
+const PrimaryNav = TabNavigator({
+  Search: { screen: SearchStack },
+  Watch: { screen: MovieWatchList }
+}, {
+  initialRouteName: 'Search',
+  lazy: true,
 })
 
 export default PrimaryNav
