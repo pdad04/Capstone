@@ -12,7 +12,6 @@ class MovieSearch extends Component {
   constructor (props) {
     super(props)
     this.state = { searchText: '', movies: [], searchedPerformed: false }
-    window.watchList = [];
   }
 
   static navigationOptions = ({ navigation }) => {

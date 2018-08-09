@@ -4,6 +4,7 @@ import { Container, Content, Button } from 'native-base'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
+import { addMovie } from '../Redux/actions'
 
 // Styles
 import styles from './Styles/MovieDetailsStyle'
@@ -20,8 +21,7 @@ class MovieDetails extends Component {
 
   addToWatchList(entry){
     // this.setState(prevState => ({ watchList: [...prevState.watchList, entry]}))
-    window.watchList.push(entry);
-    // this.props.addMovie(entry);
+    this.props.addMovie(entry);
   }
 
   render () {
@@ -49,12 +49,18 @@ class MovieDetails extends Component {
 }
 
 const mapStateToProps = (state) => {
+  // console.log('state is', state)
   return {
+    movie: state.movie
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
+  // console.log('dispatch is', dispatch)
   return {
+    addMovie: (movie) => {
+      dispatch(addMovie(movie));
+    }
   }
 }
 

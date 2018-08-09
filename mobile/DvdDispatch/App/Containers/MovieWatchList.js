@@ -7,36 +7,34 @@ import { connect } from 'react-redux'
 
 // Styles
 import styles from './Styles/MovieWatchListStyle'
-
+const names = [{name:'Andre'}, {name: 'Aubrey'}];
 class MovieWatchList extends Component {
-  // WatchScreen
 
   constructor(props) {
     super(props);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       basic: true,
-      watchList: window.watchList
       //listViewData: datas,
     };
   }
 
-
   deleteRow(secId, rowId, rowMap) {
     {this.props.removeItem(rowId)}
     rowMap[`${secId}${rowId}`].props.closeRow();
-    const newData = [...window.WatchList];
+    const newData = [...this.props.movie];
     newData.splice(rowId, 1);
   }
 
   render () {
+    console.log(this.props.movie);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     return (
       <Container>
         <Header  searchBar rounded/>
         <Content>
           <List
-            dataSource={this.ds.cloneWithRows(window.watchList)}
+            dataSource={this.ds.cloneWithRows(this.props.movie)}
             renderRow={data =>
               <ListItem>
                 <Text> {data.name} </Text>
@@ -63,6 +61,7 @@ class MovieWatchList extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    movie: state.movie.watchList
   }
 }
 
