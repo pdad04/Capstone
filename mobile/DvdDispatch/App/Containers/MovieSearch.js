@@ -20,13 +20,13 @@ class MovieSearch extends Component {
     }
  }
 
-  componentDidMount(){
-    AsyncStorage.getItem('inputKey').then((value) => {
-      if(value !== null){
-        this.setState({ searchText: value });
-      }
-    }).done();
-  }
+  // componentDidMount(){
+  //   AsyncStorage.getItem('inputKey').then((value) => {
+  //     if(value !== null){
+  //       this.setState({ searchText: value });
+  //     }
+  //   }).done();
+  // }
 
   performSearch() {
     return fetch(`http://localhost:3000/api/movies/${this.state.searchText}`)
@@ -37,11 +37,6 @@ class MovieSearch extends Component {
       .catch((error) => {
         console.error(error)
       });
-  }
-
-  addToWatchList(entry){
-    // this.setState(prevState => ({ watchList: [...prevState.watchList, entry]}))
-    window.watchList.push(entry);
   }
 
   render () {

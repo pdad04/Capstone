@@ -4,6 +4,7 @@ import { Container, Header, Content, Text, List, ListItem, Button, Icon } from '
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
+import { deleteMovie } from '../Redux/actions'
 
 // Styles
 import styles from './Styles/MovieWatchListStyle'
@@ -20,14 +21,13 @@ class MovieWatchList extends Component {
   }
 
   deleteRow(secId, rowId, rowMap) {
-    {this.props.removeItem(rowId)}
+    {this.props.deleteMovie(rowId)}
     rowMap[`${secId}${rowId}`].props.closeRow();
-    const newData = [...this.props.movie];
-    newData.splice(rowId, 1);
+    // const newData = [...this.props.movie];
+    // newData.splice(rowId, 1);
   }
 
   render () {
-    console.log(this.props.movie);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     return (
       <Container>
@@ -67,6 +67,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    deleteMovie: index => dispatch(deleteMovie(index))
   }
 }
 

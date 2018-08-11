@@ -22,7 +22,6 @@ export default class SearchMovie extends Component {
   }
 
   componentDidMount(){
-    console.log(this.props.watchList)
     AsyncStorage.getItem('inputKey').then((value) => {
       if(value !== null){
         this.setState({ searchText: value });

@@ -49,14 +49,12 @@ class MovieDetails extends Component {
 }
 
 const mapStateToProps = (state) => {
-  // console.log('state is', state)
   return {
     movie: state.movie
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  // console.log('dispatch is', dispatch)
   return {
     addMovie: (movie) => {
       dispatch(addMovie(movie));

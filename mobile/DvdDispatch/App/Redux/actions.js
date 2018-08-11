@@ -4,3 +4,10 @@ export function addMovie(movie){
         payload: movie
     }
 }
+
+export function deleteMovie(index){
+    return{
+        type: 'DELETE_MOVIE',
+        payload: parseInt(index)
+    }
+}
