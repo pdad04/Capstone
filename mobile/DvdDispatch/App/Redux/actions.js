@@ -11,3 +11,10 @@ export function deleteMovie(index){
         payload: parseInt(index)
     }
 }
+
+export function updateMovie(movie) {
+    return {
+        type: 'UPDATE_MOVIE',
+        payload: movie
+    }
+}

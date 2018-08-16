@@ -1,5 +1,5 @@
 class Movie {
-    constructor(name, theaterReleaseDate, trackId, description, artwork, rentable = undefined){
+    constructor(name, theaterReleaseDate, trackId, description, artwork, rentable = false){
         this.name = name;
         this.theaterReleaseDate = theaterReleaseDate;
         this.trackId = trackId;

@@ -30,7 +30,6 @@ app.get(`${baseUrl}/:name`, (req, res) => {
                             );
             }
         }
-        
         res.send(movies);
         
     });

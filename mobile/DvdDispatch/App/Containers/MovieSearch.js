@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, AsyncStorage, FlatList, TouchableOpacity, TouchableHighlight, Alert } from 'react-native'
+import { View, AsyncStorage, FlatList, TouchableOpacity, TouchableHighlight, Alert, ActivityIndicator } from 'react-native'
 import { Container, Content, Header, Text, Item, Icon, Input, Button, List, ListItem, Left, Right } from 'native-base'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -11,7 +11,7 @@ import styles from './Styles/MovieSearchStyle'
 class MovieSearch extends Component {
   constructor (props) {
     super(props)
-    this.state = { searchText: '', movies: [], searchedPerformed: false }
+    this.state = { searchText: '', movies: [], searchedPerformed: false, searching: false }
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -29,10 +29,11 @@ class MovieSearch extends Component {
   // }
 
   performSearch() {
+    this.setState({ searching: true })
     return fetch(`http://localhost:3000/api/movies/${this.state.searchText}`)
       .then((response) => response.json())
       .then((responseJson) => {
-        this.setState({movies: responseJson, searchedPerformed: true})
+        this.setState({movies: responseJson, searchedPerformed: true, searching: false})
       })
       .catch((error) => {
         console.error(error)
@@ -40,6 +41,13 @@ class MovieSearch extends Component {
   }
 
   render () {
+    if(this.state.searching){
+      return(
+        <Container style={styles.progressIndicator}>
+            <ActivityIndicator size='large' color='gray' />
+        </Container>
+      )
+    }
     if(this.state.searchedPerformed){
       return (
         <Container>

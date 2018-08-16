@@ -18,7 +18,9 @@ export function updateWatchList(state = defaultState, action) {
             let newWatchList = watchList.filter( (currentEle, index) => action.payload !== index);
             
             return Object.assign({}, state, { watchList: newWatchList});
-            
+        
+        case 'UPDATE_MOVIE':
+            return Object.assign({}, state, {watchList: action.payload});
         /******* REMOVE FOR FINAL PRODUCTION VERSION ********/
         case 'STARTUP':
             return Object.assign({}, state, {watchList: []});
