@@ -8,27 +8,27 @@ Do you not have time to get out to the movies anymore? Do you ever see the trail
 You will need to have the following installed:
 - React
 
-        `npm install -g create-react-app` 
+    `npm install -g create-react-app` 
 - React Native
 
-        `npm install react-native`
+    `npm install react-native`
 - [Native Base](https://docs.nativebase.io/)
 
-        `npm install native-base --save`
+    `npm install native-base --save`
 - Redux
 
-        `npm install redux`
+    `npm install redux`
 - React Redux
 
-        `npm install react-redux`
+    `npm install react-redux`
 
 - Xcode
 
 ### Running
 To run on the simulator run the following command
 
-    `react-native run-ios`
+`react-native run-ios`
 
 or you can specify a specific device
 
-    `react-native run-ios --simulator="iPhone 8`
+`react-native run-ios --simulator="iPhone 8`
