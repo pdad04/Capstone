@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, AsyncStorage, FlatList, TouchableOpacity, TouchableHighlight, Alert, ActivityIndicator } from 'react-native'
-import { Container, Content, Header, Text, Item, Icon, Input, Button, List, ListItem, Left, Right } from 'native-base'
+import { Container, Content, Header, Text, Item, Icon, Input, Button, List, ListItem, Left, Right, Body } from 'native-base'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -51,9 +51,9 @@ class MovieSearch extends Component {
     if(this.state.searchedPerformed){
       return (
         <Container>
-          <Header searchBar rounded>
+          <Header searchBar rounded style={styles.background}>
             <Item>
-              <Icon name='ios-search' />
+              <Icon name='ios-search'/>
               <Input
                 clearButtonMode={'while-editing'}
                 placeholder='Search Movie'
@@ -78,11 +78,13 @@ class MovieSearch extends Component {
             renderItem={({item}) =>(
                 <ListItem noIndent
                   onPress={() =>
-                    // Alert.alert(`Add "${item.name}" to Watch List?`, `${item.description}`, [{text: 'Add', onPress:() => this.addToWatchList(item), style:'default'}, {text: 'Cancel', style:'cancel'}])}
                     this.props.navigation.navigate('Details', {movie: item})}
                 >
                   <Left>
-                    <Text>{item.name}</Text>
+                    <Body>
+                      <Text>{item.name}</Text>
+                      <Text note style={styles.textNote}>Release Date: {new Date(item.theaterReleaseDate).toLocaleDateString()}</Text>
+                    </Body>
                   </Left>
                   <Right>
                     <Icon name='arrow-forward' />
@@ -96,7 +98,7 @@ class MovieSearch extends Component {
     }else{
       return (
         <Container>
-          <Header searchBar rounded>
+          <Header searchBar rounded style={styles.background}>
             <Item>
               <Icon name='ios-search' />
               <Input

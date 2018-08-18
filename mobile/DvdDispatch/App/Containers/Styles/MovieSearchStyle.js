@@ -11,5 +11,12 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  textNote: {
+    marginTop: 5,
+    fontSize: 12.5
+  },
+  background: {
+    backgroundColor:'#efefef'
   }
 })

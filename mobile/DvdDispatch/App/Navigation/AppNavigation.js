@@ -19,7 +19,7 @@ const SearchStack = StackNavigator({
 
 const PrimaryNav = TabNavigator({
   Search: { screen: SearchStack },
-  Watch: { screen: MovieWatchList }
+  'Watch List': { screen: MovieWatchList }
 }, 
 {
   initialRouteName: 'Search',
@@ -30,7 +30,7 @@ const PrimaryNav = TabNavigator({
       let iconName;
       if (routeName === 'Search') {
         iconName = `ios-search${focused ? '' : '-outline'}`;
-      } else if (routeName === 'Watch') {
+      } else if (routeName === 'Watch List') {
         iconName = `ios-eye${focused ? '' : '-outline'}`;
       }
 

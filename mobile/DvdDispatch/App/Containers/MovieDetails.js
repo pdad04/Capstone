@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, Image, Alert } from 'react-native'
+import { ScrollView, Text, Image, Alert, ActivityIndicator } from 'react-native'
 import { Container, Content, Button } from 'native-base'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -10,10 +10,6 @@ import { addMovie } from '../Redux/actions'
 import styles from './Styles/MovieDetailsStyle'
 
 class MovieDetails extends Component {
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {}
-  // }
 
   static navigationOptions = ({navigation}) => ({
     headerTitle: `${navigation.state.params.movie.name}`
@@ -46,17 +42,17 @@ class MovieDetails extends Component {
       <Container>
         <Content>
           <Image
-            style={{width: 227, height: 227, marginTop: 10, marginLeft: 'auto', marginRight: 'auto'}}
+            style={styles.imageStyle}
             source={{uri: this.props.navigation.state.params.movie.artworkUrl}}
             resizeMode='contain'
           />
           <Button block dark
-            style={{padding: 5, margin: 5}}
+            style={styles.buttonStyle}
             onPress={() => this.addToWatchList(this.props.navigation.state.params.movie)}
             >
-            <Text style={{color:`white`}}>Add to Watchlist</Text>
+            <Text style={styles.buttonText}>Add to Watchlist</Text>
           </Button>
-            <Text style={{margin:10}}>{this.props.navigation.state.params.movie.description}</Text>
+            <Text style={styles.movieDescription}>{this.props.navigation.state.params.movie.description}</Text>
         </Content>
       </Container>
     )

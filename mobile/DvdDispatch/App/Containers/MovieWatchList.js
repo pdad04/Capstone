@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ListView } from 'react-native'
+import { View, ListView, FlatList } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Container, Header, Content, Text, List, ListItem, Button, Icon, Right,Body } from 'native-base'
 import { connect } from 'react-redux'
@@ -19,7 +19,6 @@ class MovieWatchList extends Component {
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       basic: true,
-      avail: true
     };
   }
 
@@ -61,8 +60,8 @@ class MovieWatchList extends Component {
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     return (
       <Container>
-        <Header  searchBar rounded/>
-        <Content>
+        <Header style={styles.background}/>
+        <Content style={styles.background}>
           <List
             dataSource={this.ds.cloneWithRows(this.props.movie)}
             renderRow={data =>
@@ -71,7 +70,6 @@ class MovieWatchList extends Component {
                   <Text> {data.name} </Text>
                 </Body>
                 <Right>
-                  {/* <Icon name='ios-checkmark-circle' /> */}
                   <Ionicons name={data.isRentable ? 'ios-eye' : 'ios-eye-off'} size={25} color={data.isRentable ? 'green' : 'red'} />
                 </Right>
               </ListItem>}
@@ -104,7 +102,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteMovie: index => dispatch(deleteMovie(index)),
-    updateMovie: (movie) => dispatch(updateMovie(movie))
+    updateMovie: movie => dispatch(updateMovie(movie))
   }
 }
 
