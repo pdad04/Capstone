@@ -2,11 +2,18 @@ import React, { Component } from 'react'
 import { View, AsyncStorage, FlatList, TouchableOpacity, TouchableHighlight, Alert, ActivityIndicator } from 'react-native'
 import { Container, Content, Header, Text, Item, Icon, Input, Button, List, ListItem, Left, Right, Body } from 'native-base'
 import { connect } from 'react-redux'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import Movie from '../Models/movie'
+
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
 // Styles
 import styles from './Styles/MovieSearchStyle'
+
+let baseUrl = `https://itunes.apple.com/search?term=`
+
+// ${req.params.name}&media=movie&entity=movie&attribute=movieTerm
 
 class MovieSearch extends Component {
   constructor (props) {
@@ -30,10 +37,31 @@ class MovieSearch extends Component {
 
   performSearch() {
     this.setState({ searching: true })
-    return fetch(`http://localhost:3000/api/movies/${this.state.searchText}`)
+    return fetch(`${baseUrl}${this.state.searchText}&media=movie&entity=movie&attribute=movieTerm`)
       .then((response) => response.json())
       .then((responseJson) => {
-        this.setState({movies: responseJson, searchedPerformed: true, searching: false})
+        let movies = [];
+  
+        for(var i = 0; i < responseJson.results.length; i++){
+          if(responseJson.results[i].hasOwnProperty('trackRentalPrice') || responseJson.results[i].hasOwnProperty('trackHdRentalPrice')){
+            movies.push(new Movie(responseJson.results[i].trackName, 
+                                  responseJson.results[i].releaseDate, 
+                                  responseJson.results[i].trackId,
+                                  responseJson.results[i].longDescription,
+                                  responseJson.results[i].artworkUrl100,
+                                  responseJson.results[i].trackRentalPrice)
+                        );
+          }else{
+            movies.push(new Movie(responseJson.results[i].trackName, 
+                                  responseJson.results[i].releaseDate, 
+                                  responseJson.results[i].trackId,
+                                  responseJson.results[i].longDescription,
+                                  responseJson.results[i].artworkUrl100)
+                        );
+          }
+        }
+
+       this.setState({movies: movies, searchedPerformed: true, searching: false})
       })
       .catch((error) => {
         console.error(error)
@@ -43,12 +71,43 @@ class MovieSearch extends Component {
   render () {
     if(this.state.searching){
       return(
-        <Container style={styles.progressIndicator}>
+        <Container style={styles.indicator}>
             <ActivityIndicator size='large' color='gray' />
         </Container>
       )
     }
+
     if(this.state.searchedPerformed){
+      if(this.state.movies.length === 0){
+        return(
+          <Container>
+            <Header searchBar rounded style={styles.background}>
+              <Item>
+                <Icon name='ios-search'/>
+                <Input
+                  clearButtonMode={'while-editing'}
+                  placeholder='Search Movie'
+                  returnKeyType={'search'}
+                  onSubmitEditing={() => {
+                    if(this.state.searchText){
+                      this.performSearch()
+                    }
+                  }}
+                  onChangeText = { (text) => {
+                    this.setState({ searchText: text});
+                    AsyncStorage.setItem('inputKey', text);
+                  }}
+                  value={this.state.searchText}
+                />
+              </Item>
+            </Header>
+            <Container style={styles.indicator}>
+              <Ionicons name='ios-sad-outline' color='red' size={42} />
+              <Text style={styles.noResults}>Movie not found</Text>
+            </Container>
+          </Container>
+        )
+      }
       return (
         <Container>
           <Header searchBar rounded style={styles.background}>
@@ -64,7 +123,7 @@ class MovieSearch extends Component {
                   }
                 }}
                 onChangeText = { (text) => {
-                  this.setState({ searchText: text });
+                  this.setState({ searchText: text, searchedPerformed: text ? true : false });
                   AsyncStorage.setItem('inputKey', text);
                 }}
                 value={this.state.searchText}

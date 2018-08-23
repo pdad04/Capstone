@@ -7,7 +7,7 @@ export default StyleSheet.create({
     marginTop: Metrics.navBarHeight,
     backgroundColor: Colors.background
   },
-  progressIndicator:{
+  indicator:{
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
@@ -18,5 +18,9 @@ export default StyleSheet.create({
   },
   background: {
     backgroundColor:'#efefef'
+  },
+  noResults:{
+    fontSize:24,
+    color: 'red'
   }
 })
