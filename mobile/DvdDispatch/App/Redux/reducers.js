@@ -21,9 +21,6 @@ export function updateWatchList(state = defaultState, action) {
         
         case 'UPDATE_MOVIE':
             return Object.assign({}, state, {watchList: action.payload});
-        /******* REMOVE FOR FINAL PRODUCTION VERSION ********/
-        case 'STARTUP':
-            return Object.assign({}, state, {watchList: []});
         default:
             return state;
     }
