@@ -27,18 +27,10 @@ class MovieSearch extends Component {
     }
  }
 
-  // componentDidMount(){
-  //   AsyncStorage.getItem('inputKey').then((value) => {
-  //     if(value !== null){
-  //       this.setState({ searchText: value });
-  //     }
-  //   }).done();
-  // }
-
   performSearch() {
     this.setState({ searching: true })
     return fetch(`${baseUrl}${this.state.searchText}&media=movie&entity=movie&attribute=movieTerm`)
-      .then((response) => response.json())
+      .then((response) =>  response.json())
       .then((responseJson) => {
         let movies = [];
   
@@ -64,7 +56,8 @@ class MovieSearch extends Component {
        this.setState({movies: movies, searchedPerformed: true, searching: false})
       })
       .catch((error) => {
-        console.error(error)
+        Alert.alert('Hmmm something went wrong. Please try your search again','');
+        this.setState({searching: false})
       });
   }
 

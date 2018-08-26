@@ -36,6 +36,7 @@ class MovieWatchList extends Component {
         movies.push(this.fetchMovies(this.props.movie[i].trackId))
       }
     }
+
    Promise.all(movies).then((results)=> {
      const newMov = results.map((x) => film = {
        name: x.results[0].trackName,
@@ -52,7 +53,7 @@ class MovieWatchList extends Component {
   fetchMovies(id) {
      return fetch(`${baseUrl}${id}`).then((response) => response.json())
         .catch((error) => {
-          console.error(error)
+          Alert.alert('Hmmm something went wrong, your list will not be updated','');
         });
   }
 
@@ -73,17 +74,12 @@ class MovieWatchList extends Component {
                   <Ionicons name={data.isRentable ? 'ios-eye' : 'ios-eye-off'} size={25} color={data.isRentable ? 'green' : 'red'} />
                 </Right>
               </ListItem>}
-            renderLeftHiddenRow={data =>
-              <Button full onPress={() => alert(data.name)}>
-                <Icon name="information-circle" />
-              </Button>}
             renderRightHiddenRow={(data, secId, rowId, rowMap) =>
               <Button full danger onPress={_ => {
                 this.deleteRow(secId, rowId, rowMap)
               }}>
                 <Icon active name="trash" />
               </Button>}
-            leftOpenValue={75}
             rightOpenValue={-75}
           />
         </Content>
