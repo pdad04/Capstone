@@ -25,8 +25,7 @@ class MovieWatchList extends Component {
   deleteRow(secId, rowId, rowMap) {
     {this.props.deleteMovie(rowId)}
     rowMap[`${secId}${rowId}`].props.closeRow();
-    // const newData = [...this.props.movie];
-    // newData.splice(rowId, 1);
+
   }
 
   componentDidMount() {
@@ -45,7 +44,6 @@ class MovieWatchList extends Component {
        description: x.results[0].longDescription,
        artworkUrl: x.results[0].artworkUrl100,
        isRentable: x.results[0].trackRentalPrice || false});
-
       this.props.updateMovie(newMov);
     });
   }
