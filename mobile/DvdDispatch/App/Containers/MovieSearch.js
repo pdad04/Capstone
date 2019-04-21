@@ -29,9 +29,9 @@ class MovieSearch extends Component {
 
   performSearch() {
     this.setState({ searching: true })
-    return fetch(`${baseUrl}${this.state.searchText}&media=movie&entity=movie&attribute=movieTerm`)
+    return fetch(`${baseUrl}${this.state.searchText}&media=movie&entity=movie`)
       .then((response) =>  response.json())
-      .then((responseJson) => {
+      .then((responseJson) => {  
         let movies = [];
   
         for(var i = 0; i < responseJson.results.length; i++){
